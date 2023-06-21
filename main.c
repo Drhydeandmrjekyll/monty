@@ -71,7 +71,6 @@ int main(int argc, char *argv[])
                 exit(EXIT_FAILURE);
             }
         }
-        /* TODO: Implement a function to find and execute the opcode */
     }
 
     /* Cleanup */
