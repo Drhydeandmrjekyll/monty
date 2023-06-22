@@ -1,35 +1,35 @@
 #include "monty.h"
 
 /**
- * push - pushes an element to the stack
- * @stack: double pointer to the top of the stack
- * @line_number: value of the new element
- * Return: nothing
- */
-void push(stack_t **stack, unsigned int line_number)
+* push - pushes an element to the stack
+* @stack: double pointer to the top of the stack
+* @n: value of the new element
+*
+* Return: void
+*/
+void push(stack_t **stack, int n)
 {
-    stack_t *new;
+stack_t *new_node;  /* New node to be added to the stack */
 
-    if (!stack)
-    {
-        fprintf(stderr, "L%d: stack not found\n", line_number);
-        exit(EXIT_FAILURE);
-    }
+/* Allocate memory for the new node */
+new_node = malloc(sizeof(stack_t));
+if (!new_node)
+{
+fprintf(stderr, "Error: malloc failed\n");
+exit(EXIT_FAILURE);
+}
 
-    new = malloc(sizeof(stack_t));
-    if (!new)
-    {
-        fprintf(stderr, "Error: malloc failed\n");
-        exit(EXIT_FAILURE);
-    }
-    new->n = line_number;
-    new->prev = NULL;
-    new->next = NULL;
+/* Initialize the new node */
+new_node->n = n;
+new_node->prev = NULL;
+new_node->next = (*stack) ? *stack : NULL;
 
-    if (*stack != NULL)
-    {
-        new->next = *stack;
-        (*stack)->prev = new;
-    }
-    *stack = new;
+/* Update the previous pointer of the old top element */
+if (*stack)
+{
+(*stack)->prev = new_node;
+}
+
+/* Point the top of the stack to the new node */
+*stack = new_node;
 }

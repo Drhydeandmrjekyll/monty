@@ -34,7 +34,47 @@ typedef struct instruction_s
     void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-void push(stack_t **stack, unsigned int line_number);
+/**
+ * struct cmd_s - cmd
+ * @fd: file descriptor
+ * @line: line
+ */
+typedef struct cmd_s
+{
+	FILE *fd;
+	char *line;
+} cmd_t;
+/**
+ * struct bus_s - variables -args, file, line content
+ * @arg: value
+ * @file: pointer to monty file
+ * @content: line content
+ * @lifi: flag change stack <-> queue
+ * Description: carries values through the program
+ */
+typedef struct bus_s
+{
+	char *arg;
+	FILE *file;
+	char *content;
+	int lifi;
+}  bus_t;
+extern bus_t bus;
+
+void push(stack_t **stack, int n);
 void pall(stack_t **stack, unsigned int line_number);
+void pint(stack_t **head, unsigned int counter);
+int process_lines(FILE *file, stack_t **stack);
+void find_and_execute_opcode(char *opcode, stack_t **stack, unsigned int line_number);
+int is_number(char *s);
+int process_push(char *arg, stack_t **stack, unsigned int line_number);
+int process_opcode(char *opcode, stack_t **stack, unsigned int line_number);
+int process_lines(FILE *file, stack_t **stack);
+void pop(stack_t **head, cmd_t *cmd, unsigned int counter);
+void swap(stack_t **head, cmd_t *cmd, unsigned int counter);
+
+FILE *open_file(char *filename);
+
+void free_stack(stack_t *head);
 
 #endif /* MONTY_H */
